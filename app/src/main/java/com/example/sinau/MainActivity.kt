@@ -10,9 +10,5 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager.beginTransaction()
             .add(R.id.main,SplashFragment()).commit()
-
-        var t = SplashFragment
-
-        t.newInstance("qw","qwer")
     }
 }
