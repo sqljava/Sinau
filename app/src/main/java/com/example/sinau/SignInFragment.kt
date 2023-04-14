@@ -2,16 +2,19 @@ package com.example.sinau
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.example.sinau.databinding.FragmentSignInBinding
 import com.example.sinau.model.User
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.DEBUG_PROPERTY_NAME
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,33 +55,39 @@ class SignInFragment : Fragment() {
         binding = FragmentSignInBinding.inflate(inflater, container, false)
 
         file = requireActivity().getSharedPreferences("FILE", Context.MODE_PRIVATE)
-        var editor = file.edit()
+        //var editor = file.edit()
         var gson = Gson()
 
         var str = file.getString("USERS","")
 
 
 
+        binding.btnSignIn.setOnClickListener {
+
         if (!areFieldsEmpty()){
             if (str==""){
-                //Toast.makeText(this, "Try to Sign up first!", Toast.LENGTH_LONG)
+                Toast.makeText(requireContext(), "Try to Sign up first!", Toast.LENGTH_LONG)
+                findNavController().navigate(R.id.action_signInFragment_to_parentFragment)
             }
             else{
+
                 userList = gson.fromJson(str, type)
                 var user = User(userName, userPassword)
                 for (i in userList){
                     if (user==i){
                         currentUser = user
-                        openAccess()
+
+                        findNavController().navigate(R.id.action_signInFragment_to_parentFragment)
                     }else{
                         //Toast.makeText(this, "Not found!", Toast.LENGTH_LONG)
                     }
                 }
             }
         }
+        }
 
         binding.signUpText.setOnClickListener {
-
+            findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
         }
 
         return binding.root
@@ -88,12 +97,25 @@ class SignInFragment : Fragment() {
         userName = binding.signInName.text.toString()
         userPassword = binding.signInPassword.text.toString()
 
+        if (userName.isEmpty()){
+            binding.bigSignInName.helperText = "Please fill"
+
+        }else{
+            binding.bigSignInName.helperText = "Your name"
+        }
+        if(userPassword.isEmpty()){
+            binding.bigSignInPassword.helperText = "Please fill"
+        }else{
+            binding.bigSignInPassword.helperText = "Password"
+        }
+
+
+
+
         return userName.isEmpty() or (userPassword.isEmpty())
     }
 
-    fun openAccess(){
 
-    }
 
     companion object {
 

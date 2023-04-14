@@ -43,29 +43,33 @@ class ParentFragment : Fragment() {
         binding = FragmentParentBinding.inflate(inflater, container, false)
 
 
-        //var navController = findNavController()
+        //val navController = findNavController()
 
-        //binding.navBar.setupWithNavController(navController)
+        binding.navBar.setupWithNavController(findNavController())
 
-        binding.navBar.setOnItemReselectedListener {
 
-            when(it.itemId){
-                R.id.homeFragment->{
-                    replaceFragment(HomeFragment())
-                }
-                R.id.courseFragment->{
-                    replaceFragment(CourseFragment())
-                }
-                R.id.chatFragment->{
-                    replaceFragment(ChatFragment())
-                }
-                R.id.profileFragment->{
-                    replaceFragment(ProfileFragment())
-                }
 
-            }
-            true
-        }
+
+//        binding.navBar.setOnItemReselectedListener {
+//
+//            when(it.itemId){
+//                R.id.homeFragment->{
+//                    replaceFragment(HomeFragment())
+//                }
+//                R.id.courseFragment->{
+//                    replaceFragment(CourseFragment())
+//                }
+//                R.id.chatFragment->{
+//                    replaceFragment(ChatFragment())
+//                }
+//                R.id.profileFragment->{
+//                    //findNavController()
+//
+//                }
+//
+//            }
+//            true
+//        }
 
 
         return binding.root

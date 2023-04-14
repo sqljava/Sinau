@@ -1,10 +1,18 @@
 package com.example.sinau
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.example.sinau.databinding.FragmentSignUpBinding
+import com.example.sinau.model.User
+import com.google.gson.Gson
+import com.google.gson.ToNumberStrategy
+import com.google.gson.reflect.TypeToken
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +29,14 @@ class SignUpFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    lateinit var binding: FragmentSignUpBinding
+    lateinit var file: SharedPreferences
+    var typeUsers = object : TypeToken<List<User>>(){}.type
+    var userList = mutableListOf<User>()
+
+    lateinit var userName:String
+    lateinit var userPassword:String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -33,8 +49,37 @@ class SignUpFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up, container, false)
+        binding = FragmentSignUpBinding.inflate(inflater,container,false)
+
+
+
+        file = requireActivity().getSharedPreferences("FILE", Context.MODE_PRIVATE)
+        var gson = Gson()
+
+        var strUsers = file.getString("USERS","")
+
+        //userList = gson.fromJson(strUsers,typeUsers)
+
+        binding.btnSignUp.setOnClickListener {
+            if(areFieldsEmpty()){
+                
+
+            }
+
+        }
+
+        binding.signInText.setOnClickListener {
+            findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
+        }
+
+        return binding.root
+    }
+
+    private fun areFieldsEmpty():Boolean{
+        userName = binding.signUpName.text.toString()
+        userPassword = binding.signUpPassword.text.toString()
+
+        return userName.isEmpty() or (userPassword.isEmpty())
     }
 
     companion object {

@@ -36,9 +36,9 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+
 
         return binding.root
     }
@@ -54,11 +54,11 @@ class HomeFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, ) =
+        fun newInstance(param1: String, param2: String) =
             HomeFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
-                    //putString(ARG_PARAM2, param2)
+                    putString(ARG_PARAM2, param2)
                 }
             }
     }

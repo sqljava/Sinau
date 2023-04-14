@@ -28,7 +28,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/login"
+        android:id="@+id/big_sign_in_name"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -54,9 +54,8 @@
             android:maxLength="20" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/pass"
+        android:id="@+id/big_sign_in_password"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -71,10 +70,11 @@
         app:counterEnabled="true"
         app:endIconMode="clear_text"
         app:helperText="Password"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login">
+        app:layout_constraintTop_toBottomOf="@+id/big_sign_in_name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/sign_in_password"
@@ -91,7 +91,7 @@
         android:layout_marginTop="10dp"
         android:text="Remember me"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pass" />
+        app:layout_constraintTop_toBottomOf="@+id/big_sign_in_password" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_sign_in"
@@ -132,7 +132,6 @@
             android:textColor="@color/purple_700"
             android:layout_marginStart="10dp"/>
 
-
     </LinearLayout>
 
     <TextView
@@ -145,6 +144,6 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialButton" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_sign_in" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

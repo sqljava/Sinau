@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_parentFragment"
+            app:destination="@id/parentFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -52,4 +55,9 @@
             android:id="@+id/action_splashFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/parentFragment"
+        android:name="com.example.sinau.ParentFragment"
+        android:label="fragment_parent"
+        tools:layout="@layout/fragment_parent" />
 </navigation>
