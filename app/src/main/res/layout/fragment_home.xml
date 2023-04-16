@@ -68,15 +68,36 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <SearchView
+            <FrameLayout
                 android:id="@+id/search"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_weight="4"
                 android:background="@drawable/search_bg"
-                android:queryHint="Search"
-                android:iconifiedByDefault="false"
-                android:queryBackground="@android:color/transparent"                />
+                android:queryBackground="@android:color/transparent"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Search"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="20dp"
+                    android:layout_gravity="center_vertical"/>
+
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/search"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="20dp"
+                    />
+
+
+            </FrameLayout>
+
 
             <RelativeLayout
                 android:layout_width="0dp"

@@ -6,26 +6,6 @@
     app:startDestination="@id/splashFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.sinau.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
-    <fragment
-        android:id="@+id/chatFragment"
-        android:name="com.example.sinau.ChatFragment"
-        android:label="fragment_chat"
-        tools:layout="@layout/fragment_chat" />
-    <fragment
-        android:id="@+id/courseFragment"
-        android:name="com.example.sinau.CourseFragment"
-        android:label="fragment_course"
-        tools:layout="@layout/fragment_course" />
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.example.sinau.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
-    <fragment
         android:id="@+id/signInFragment"
         android:name="com.example.sinau.SignInFragment"
         android:label="fragment_sign_in"

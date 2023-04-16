@@ -5,7 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.sinau.adapter.CourseAdapter
 import com.example.sinau.databinding.FragmentHomeBinding
+import com.example.sinau.model.Course
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,6 +29,7 @@ class HomeFragment : Fragment() {
     private var param2: String? = null
 
     lateinit var binding: FragmentHomeBinding
+    var courseList = mutableListOf<Course>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,11 +44,45 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        addCourse()
+
+        var adapter = CourseAdapter(courseList)
+        binding.recyclerHome.adapter = adapter
+
+        var manager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false)
+        binding.recyclerHome.layoutManager = manager
+
+
+//        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//                TODO("Not yet implemented")
+//            }
+//
+//        })
+
+        binding.search.setOnClickListener{
+            findNavController().navigate(R.id.action_homeFragment2_to_searchFragment)
+
+        }
+
 
 
 
         return binding.root
     }
+
+    fun addCourse(){
+        courseList.add(Course("3D Design Basic",24.99, R.drawable.abstract3d))
+        courseList.add(Course("Animation",24.99, R.drawable.abstract3d))
+        courseList.add(Course("Design",24.99, R.drawable.abstract3d))
+        courseList.add(Course("Product",24.99, R.drawable.abstract3d))
+        courseList.add(Course("Game",24.99, R.drawable.abstract3d))
+    }
+
 
     companion object {
         /**
