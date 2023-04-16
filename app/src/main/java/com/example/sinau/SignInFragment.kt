@@ -55,7 +55,7 @@ class SignInFragment : Fragment() {
         binding = FragmentSignInBinding.inflate(inflater, container, false)
 
         file = requireActivity().getSharedPreferences("FILE", Context.MODE_PRIVATE)
-        //var editor = file.edit()
+        var editor = file.edit()
         var gson = Gson()
 
         var str = file.getString("USERS","")
@@ -66,20 +66,18 @@ class SignInFragment : Fragment() {
 
         if (!areFieldsEmpty()){
             if (str==""){
-                Toast.makeText(requireContext(), "Try to Sign up first!", Toast.LENGTH_LONG)
-                findNavController().navigate(R.id.action_signInFragment_to_parentFragment)
+                //findNavController().navigate(R.id.action_signInFragment_to_parentFragment)
             }
             else{
-
                 userList = gson.fromJson(str, type)
                 var user = User(userName, userPassword)
                 for (i in userList){
                     if (user==i){
                         currentUser = user
-
+                        var u = gson.toJson(currentUser)
+                        editor.putString("USER",u)
+                        editor.commit()
                         findNavController().navigate(R.id.action_signInFragment_to_parentFragment)
-                    }else{
-                        //Toast.makeText(this, "Not found!", Toast.LENGTH_LONG)
                     }
                 }
             }
@@ -108,10 +106,6 @@ class SignInFragment : Fragment() {
         }else{
             binding.bigSignInPassword.helperText = "Password"
         }
-
-
-
-
         return userName.isEmpty() or (userPassword.isEmpty())
     }
 

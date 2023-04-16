@@ -36,6 +36,7 @@ class SignUpFragment : Fragment() {
 
     lateinit var userName:String
     lateinit var userPassword:String
+    lateinit var currentUser : User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,17 +56,32 @@ class SignUpFragment : Fragment() {
 
         file = requireActivity().getSharedPreferences("FILE", Context.MODE_PRIVATE)
         var gson = Gson()
+        val editor = file.edit()
 
         var strUsers = file.getString("USERS","")
 
-        //userList = gson.fromJson(strUsers,typeUsers)
-
         binding.btnSignUp.setOnClickListener {
-            if(areFieldsEmpty()){
-                
+            if(!areFieldsEmpty()){
+                if (strUsers==""){
 
+                    userList.add(currentUser)
+                    strUsers = gson.toJson(userList)
+                    editor.putString("USERS",strUsers)
+                    findNavController().navigate(R.id.action_signUpFragment_to_parentFragment)
+                }else{
+                    userList = gson.fromJson(strUsers,typeUsers)
+                    for (i in userList){
+                        if (currentUser==i){
+                            println("this acc already exists")
+                        }else{
+                            userList.add(currentUser)
+                            strUsers = gson.toJson(userList)
+                            editor.putString("USERS",strUsers)
+                            findNavController().navigate(R.id.action_signUpFragment_to_parentFragment)
+                        }
+                    }
+                }
             }
-
         }
 
         binding.signInText.setOnClickListener {
@@ -79,6 +95,18 @@ class SignUpFragment : Fragment() {
         userName = binding.signUpName.text.toString()
         userPassword = binding.signUpPassword.text.toString()
 
+        currentUser = User(userName,userPassword)
+
+        if (userName.isEmpty()){
+            binding.bigSignUpName.helperText = "Please fill"
+        }else{
+            binding.bigSignUpName.helperText = "Your name"
+        }
+        if(userPassword.isEmpty()){
+            binding.bigSignUpPassword.helperText = "Please fill"
+        }else{
+            binding.bigSignUpPassword.helperText = "Password"
+        }
         return userName.isEmpty() or (userPassword.isEmpty())
     }
 

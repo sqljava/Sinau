@@ -28,7 +28,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/login"
+        android:id="@+id/big_sign_up_name"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/pass"
+        android:id="@+id/big_sign_up_password"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login">
+        app:layout_constraintTop_toBottomOf="@+id/big_sign_up_name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/sign_up_password"
@@ -84,14 +84,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <CheckBox
-        android:id="@+id/sign_in_check_box"
+        android:id="@+id/sign_up_check_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="10dp"
         android:text="Remember me"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pass" />
+        app:layout_constraintTop_toBottomOf="@+id/big_sign_up_password" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_sign_up"
@@ -104,7 +104,7 @@
         app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_check_box" />
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_check_box" />
 
     <LinearLayout
         android:layout_width="wrap_content"
