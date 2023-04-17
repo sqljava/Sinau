@@ -1,5 +1,7 @@
 package com.example.sinau
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +14,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sinau.adapter.CourseAdapter
 import com.example.sinau.databinding.FragmentHomeBinding
 import com.example.sinau.model.Course
+import com.example.sinau.model.User
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,6 +36,9 @@ class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
     var courseList = mutableListOf<Course>()
 
+    lateinit var file: SharedPreferences
+    var courseListType = object : TypeToken<List<Course>>(){}.type
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -44,7 +52,21 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        addCourse()
+
+
+        file = requireActivity().getSharedPreferences("FILE", Context.MODE_PRIVATE)
+        var gson = Gson()
+        val editor = file.edit()
+
+        var strCourses = file.getString("COURSES", "")
+
+        if (strCourses==""){
+            addCourse()
+        }else{
+            courseList = gson.fromJson(strCourses, courseListType)
+        }
+
+
 
         var adapter = CourseAdapter(courseList)
         binding.recyclerHome.adapter = adapter
@@ -53,16 +75,6 @@ class HomeFragment : Fragment() {
         binding.recyclerHome.layoutManager = manager
 
 
-//        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-//            override fun onQueryTextSubmit(query: String?): Boolean {
-//                TODO("Not yet implemented")
-//            }
-//
-//            override fun onQueryTextChange(newText: String?): Boolean {
-//                TODO("Not yet implemented")
-//            }
-//
-//        })
 
         binding.search.setOnClickListener{
             findNavController().navigate(R.id.action_homeFragment2_to_searchFragment)
@@ -71,6 +83,10 @@ class HomeFragment : Fragment() {
 
 
 
+
+        strCourses = gson.toJson(courseList)
+        editor.putString("COURSES", strCourses)
+        editor.commit()
 
         return binding.root
     }
