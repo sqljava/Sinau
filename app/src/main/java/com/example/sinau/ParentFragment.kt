@@ -42,34 +42,34 @@ class ParentFragment : Fragment() {
     ): View? {
         binding = FragmentParentBinding.inflate(inflater, container, false)
 
+        //binding.navBar.setupWithNavController(findNavController())
+        //findNavController().navigate(R.id.action_parentFragment_to_nav_menu)
+        //binding.navBar.setupWithNavController(findNavController())
 
-        //val navController = findNavController()
+        replaceFragment(HomeFragment())
 
-        binding.navBar.setupWithNavController(findNavController())
+        binding.navBar.setOnItemReselectedListener {
 
-
-
-
-//        binding.navBar.setOnItemReselectedListener {
-//
-//            when(it.itemId){
-//                R.id.homeFragment->{
-//                    replaceFragment(HomeFragment())
-//                }
-//                R.id.courseFragment->{
-//                    replaceFragment(CourseFragment())
-//                }
-//                R.id.chatFragment->{
-//                    replaceFragment(ChatFragment())
-//                }
-//                R.id.profileFragment->{
-//                    //findNavController()
-//
-//                }
-//
-//            }
-//            true
-//        }
+            when(it.itemId){
+                R.id.homeFragment->{
+                    replaceFragment(HomeFragment())
+                    true
+                }
+                R.id.courseFragment->{
+                    replaceFragment(CourseFragment())
+                    true
+                }
+                R.id.chatFragment->{
+                    replaceFragment(ChatFragment())
+                    true
+                }
+                R.id.profileFragment->{
+                    replaceFragment(ProfileFragment())
+                    true
+                }
+            }
+            true
+        }
 
 
         return binding.root
@@ -78,7 +78,7 @@ class ParentFragment : Fragment() {
     private fun replaceFragment(fragment: Fragment){
         var changer = parentFragmentManager.beginTransaction()
 
-        changer.replace(R.id.parent_container, fragment)
+        changer.replace(R.id.parent_container, fragment).commit()
     }
 
     companion object {

@@ -38,6 +38,8 @@ class HomeFragment : Fragment() {
 
     lateinit var file: SharedPreferences
     var courseListType = object : TypeToken<List<Course>>(){}.type
+    var userType = object : TypeToken<User>(){}.type
+    lateinit var currentUser : User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +55,6 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-
         file = requireActivity().getSharedPreferences("FILE", Context.MODE_PRIVATE)
         var gson = Gson()
         val editor = file.edit()
@@ -66,9 +67,16 @@ class HomeFragment : Fragment() {
             courseList = gson.fromJson(strCourses, courseListType)
         }
 
+        var strUser = file.getString("USER", "")
+
+        currentUser  = gson.fromJson(strUser,userType)
+
+        binding.hello.text = "Hello "+currentUser.name+"!"
 
 
-        var adapter = CourseAdapter(courseList)
+
+
+        var adapter = CourseAdapter(courseList,requireActivity())
         binding.recyclerHome.adapter = adapter
 
         var manager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false)
@@ -77,12 +85,12 @@ class HomeFragment : Fragment() {
 
 
         binding.search.setOnClickListener{
-            findNavController().navigate(R.id.action_homeFragment2_to_searchFragment)
-
+            //findNavController().navigate(R.id.action_homeFragment2_to_searchFragment)
         }
 
-
-
+        binding.seeAllCourses.setOnClickListener {
+            //findNavController().navigate(R.id.action_homeFragment2_to_seeAllFragment)
+        }
 
         strCourses = gson.toJson(courseList)
         editor.putString("COURSES", strCourses)

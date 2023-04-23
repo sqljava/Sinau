@@ -40,10 +40,9 @@ class SplashFragment : Fragment() {
         binding = FragmentSplashBinding.inflate(inflater, container, false)
 
         binding.splashButton.setOnClickListener {
-//            parentFragmentManager.beginTransaction().replace(R.id.main,
-//                ParentFragment()).commit()
-
-            findNavController().navigate(R.id.action_splashFragment_to_signInFragment)
+            parentFragmentManager.beginTransaction().replace(R.id.main,
+                SignInFragment()).commit()
+            //findNavController().navigate(R.id.action_splashFragment_to_signInFragment)
         }
 
 

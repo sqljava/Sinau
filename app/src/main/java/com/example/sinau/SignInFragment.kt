@@ -72,12 +72,13 @@ class SignInFragment : Fragment() {
                 userList = gson.fromJson(str, type)
                 var user = User(userName, userPassword)
                 for (i in userList){
-                    if (user==i){
+                    if (user.name==i.name && user.password==i.password){
                         currentUser = user
                         var u = gson.toJson(currentUser)
                         editor.putString("USER",u)
-                        editor.commit()
-                        findNavController().navigate(R.id.action_signInFragment_to_parentFragment)
+                        editor.apply()
+                        parentFragmentManager.beginTransaction().replace(R.id.main,
+                        ParentFragment()).commit()
                     }
                 }
             }
@@ -85,7 +86,8 @@ class SignInFragment : Fragment() {
         }
 
         binding.signUpText.setOnClickListener {
-            findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
+            parentFragmentManager.beginTransaction().replace(R.id.main,
+            SignUpFragment()).commit()
         }
 
         return binding.root

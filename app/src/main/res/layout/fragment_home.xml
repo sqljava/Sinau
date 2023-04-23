@@ -30,7 +30,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/hello"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hello, User!"
@@ -41,24 +41,26 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-
             <RelativeLayout
-                android:id="@+id/relativeLayout"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:gravity="center"
-                app:layout_constraintStart_toEndOf="@+id/textView2"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="20dp"/>
+                android:id="@+id/wishlist"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/search_bg"
+                android:padding="5dp"
+                android:layout_marginStart="100dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/hello"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <RelativeLayout
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:gravity="center"
-                app:layout_constraintStart_toEndOf="@+id/relativeLayout"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="20dp"/>
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/favorite" />
+
+
+            </RelativeLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -168,6 +170,7 @@
                 android:textColor="@color/black"/>
 
             <TextView
+                android:id="@+id/see_all_courses"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

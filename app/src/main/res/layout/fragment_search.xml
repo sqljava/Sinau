@@ -27,8 +27,6 @@
 
         </RelativeLayout>
 
-
-
     <SearchView
         android:id="@+id/search"
         android:layout_width="200dp"
@@ -60,11 +58,15 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:text="Results"
+        android:textSize="25sp"
+        android:textColor="@color/black"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="15"/>
+        android:layout_weight="15"
+        android:layout_marginTop="10dp"/>
 </LinearLayout>

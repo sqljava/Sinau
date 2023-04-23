@@ -59,6 +59,7 @@ class SignUpFragment : Fragment() {
         val editor = file.edit()
 
         var strUsers = file.getString("USERS","")
+        var strUser = ""
 
         binding.btnSignUp.setOnClickListener {
             if(!areFieldsEmpty()){
@@ -67,7 +68,11 @@ class SignUpFragment : Fragment() {
                     userList.add(currentUser)
                     strUsers = gson.toJson(userList)
                     editor.putString("USERS",strUsers)
-                    findNavController().navigate(R.id.action_signUpFragment_to_parentFragment)
+                    strUser = gson.toJson(currentUser)
+                    editor.putString("USER", strUser)
+                    editor.apply()
+                    parentFragmentManager.beginTransaction().replace(R.id.main,
+                        ParentFragment()).commit()
                 }else{
                     userList = gson.fromJson(strUsers,typeUsers)
                     for (i in userList){
@@ -77,7 +82,11 @@ class SignUpFragment : Fragment() {
                             userList.add(currentUser)
                             strUsers = gson.toJson(userList)
                             editor.putString("USERS",strUsers)
-                            findNavController().navigate(R.id.action_signUpFragment_to_parentFragment)
+                            strUser = gson.toJson(currentUser)
+                            editor.putString("USER", strUser)
+                            editor.apply()
+                            parentFragmentManager.beginTransaction().replace(R.id.main,
+                                ParentFragment()).commit()
                         }
                     }
                 }
@@ -85,8 +94,7 @@ class SignUpFragment : Fragment() {
         }
 
         binding.signInText.setOnClickListener {
-            findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
-        }
+            parentFragmentManager.beginTransaction().replace(R.id.main, SignInFragment()).commit()        }
 
         return binding.root
     }
