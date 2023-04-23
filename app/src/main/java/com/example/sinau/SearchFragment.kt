@@ -59,35 +59,35 @@ class SearchFragment : Fragment() {
         var adapter = CourseAdapter(courseList,requireActivity())
         binding.searchRecycler.adapter = adapter
 
-        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                binding.search.clearFocus()
-                var list = mutableListOf<Course>()
-
-                for (i in courseList){
-                    if (i.name.contains(p0.toString())){
-                        list.add(i)
-                    }
-                }
-                binding.searchRecycler.adapter = CourseAdapter(list,requireActivity())
-
-                return false
-            }
-
-            override fun onQueryTextChange(p0: String?): Boolean {
-                binding.search.clearFocus()
-                var list = mutableListOf<Course>()
-
-                for (i in courseList){
-                    if (i.name.contains(p0.toString())){
-                        list.add(i)
-                    }
-                }
-                binding.searchRecycler.adapter = CourseAdapter(list,requireActivity())
-
-                return false
-            }
-        })
+//        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+//            override fun onQueryTextSubmit(p0: String?): Boolean {
+//                binding.search.clearFocus()
+//                var list = mutableListOf<Course>()
+//
+//                for (i in courseList){
+//                    if (i.name.contains(p0.toString())){
+//                        list.add(i)
+//                    }
+//                }
+//                binding.searchRecycler.adapter = CourseAdapter(list,requireActivity())
+//
+//                return false
+//            }
+//
+//            override fun onQueryTextChange(p0: String?): Boolean {
+//                binding.search.clearFocus()
+//                var list = mutableListOf<Course>()
+//
+//                for (i in courseList){
+//                    if (i.name.contains(p0.toString())){
+//                        list.add(i)
+//                    }
+//                }
+//                binding.searchRecycler.adapter = CourseAdapter(list,requireActivity())
+//
+//                return false
+//            }
+//        })
 
 
         return binding.root

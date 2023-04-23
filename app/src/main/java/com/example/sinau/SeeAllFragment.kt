@@ -12,13 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sinau.adapter.CourseAdapter
 import com.example.sinau.databinding.FragmentSeeAllBinding
 import com.example.sinau.model.Course
+import com.example.sinau.model.User
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+
 
 /**
  * A simple [Fragment] subclass.
@@ -28,18 +29,17 @@ private const val ARG_PARAM2 = "param2"
 class SeeAllFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
-    private var param2: String? = null
 
     lateinit var binding: FragmentSeeAllBinding
 
     lateinit var file: SharedPreferences
-    var courseListType = object : TypeToken<List<Course>>(){}.type
+    lateinit var currentUser: User
+    var userType = object : TypeToken<User>(){}.type
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
         }
     }
 
@@ -52,11 +52,27 @@ class SeeAllFragment : Fragment() {
         file = requireActivity().getSharedPreferences("FILE", Context.MODE_PRIVATE)
         var gson = Gson()
 
-        var strcourses = file.getString("COURSES", "")
+        var strUser = file.getString("USER", "")
 
-        var list = gson.fromJson<MutableList<Course>>(strcourses,courseListType)
+        currentUser = gson.fromJson(strUser,userType)
+
+        var list = currentUser.courses
+
+        var title = arguments?.getString(ARG_PARAM1)
+        binding.moreText.text = title
 
         var adapter = CourseAdapter(list, requireActivity())
+
+        if (title=="Wishlist"){
+            var wlist = mutableListOf<Course>()
+            for (i in list){
+                if (i.liked){
+                    wlist.add(i)
+                }
+            }
+            adapter = CourseAdapter(wlist,requireActivity())
+        }
+
         var manager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
 
         binding.seeAllRecycler.adapter = adapter
@@ -82,11 +98,10 @@ class SeeAllFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(title: String) =
             SeeAllFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString(ARG_PARAM1, title)
                 }
             }
     }

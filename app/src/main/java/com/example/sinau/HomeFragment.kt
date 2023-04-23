@@ -39,7 +39,9 @@ class HomeFragment : Fragment() {
     lateinit var file: SharedPreferences
     var courseListType = object : TypeToken<List<Course>>(){}.type
     var userType = object : TypeToken<User>(){}.type
+    var typeUsers = object : TypeToken<List<User>>(){}.type
     lateinit var currentUser : User
+    var users = mutableListOf<User>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,19 +61,20 @@ class HomeFragment : Fragment() {
         var gson = Gson()
         val editor = file.edit()
 
-        var strCourses = file.getString("COURSES", "")
-
-        if (strCourses==""){
-            addCourse()
-        }else{
-            courseList = gson.fromJson(strCourses, courseListType)
-        }
+        var strUsers = file.getString("USERS","")
+        users = gson.fromJson(strUsers,typeUsers)
 
         var strUser = file.getString("USER", "")
-
         currentUser  = gson.fromJson(strUser,userType)
 
         binding.hello.text = "Hello "+currentUser.name+"!"
+
+        if (currentUser.courses.isEmpty()){
+            addCourse()
+            currentUser.courses = courseList
+        }else{
+            courseList = currentUser.courses
+        }
 
 
 
@@ -89,12 +92,31 @@ class HomeFragment : Fragment() {
         }
 
         binding.seeAllCourses.setOnClickListener {
-            //findNavController().navigate(R.id.action_homeFragment2_to_seeAllFragment)
+            parentFragmentManager.beginTransaction().replace(R.id.parent_container,
+            SeeAllFragment.newInstance("See all")).commit()
         }
 
-        strCourses = gson.toJson(courseList)
-        editor.putString("COURSES", strCourses)
-        editor.commit()
+        binding.wishlist.setOnClickListener {
+            parentFragmentManager.beginTransaction().replace(R.id.parent_container,
+                SeeAllFragment.newInstance("Wishlist")).commit()
+        }
+
+        for (i in 0..users.size-1){
+            if (users[i].name==currentUser.name){
+                users[i] = currentUser
+            }
+        }
+
+        strUsers = gson.toJson(users)
+        editor.putString("USERS", strUsers)
+        editor.apply()
+
+
+        strUser = gson.toJson(currentUser)
+        editor.putString("USER",strUser)
+        editor.apply()
+
+
 
         return binding.root
     }

@@ -147,4 +147,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_sign_up" />
 
+    <TextView
+        android:id="@+id/up_helper_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="HelperText"
+        android:layout_marginTop="10dp"
+        android:textColor="#F44336"
+        app:layout_constraintBottom_toTopOf="@+id/btn_sign_up"
+        app:layout_constraintStart_toEndOf="@+id/sign_up_check_box"
+        app:layout_constraintTop_toBottomOf="@+id/big_sign_up_password" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -63,32 +63,41 @@ class SignUpFragment : Fragment() {
 
         binding.btnSignUp.setOnClickListener {
             if(!areFieldsEmpty()){
-                if (strUsers==""){
-
-                    userList.add(currentUser)
-                    strUsers = gson.toJson(userList)
-                    editor.putString("USERS",strUsers)
-                    strUser = gson.toJson(currentUser)
-                    editor.putString("USER", strUser)
-                    editor.apply()
-                    parentFragmentManager.beginTransaction().replace(R.id.main,
-                        ParentFragment()).commit()
-                }else{
-                    userList = gson.fromJson(strUsers,typeUsers)
-                    for (i in userList){
-                        if (currentUser==i){
-                            println("this acc already exists")
-                        }else{
-                            userList.add(currentUser)
-                            strUsers = gson.toJson(userList)
-                            editor.putString("USERS",strUsers)
-                            strUser = gson.toJson(currentUser)
-                            editor.putString("USER", strUser)
-                            editor.apply()
-                            parentFragmentManager.beginTransaction().replace(R.id.main,
-                                ParentFragment()).commit()
+                if (isDataCorrect()){
+                    if (strUsers==""){
+                        userList.add(currentUser)
+                        if (binding.signUpCheckBox.isChecked){
+                            editor.putBoolean("REMEMBER",true)
+                        }
+                        strUsers = gson.toJson(userList)
+                        editor.putString("USERS",strUsers)
+                        strUser = gson.toJson(currentUser)
+                        editor.putString("USER", strUser)
+                        editor.apply()
+                        parentFragmentManager.beginTransaction().replace(R.id.main,
+                            ParentFragment()).commit()
+                    }else{
+                        userList = gson.fromJson(strUsers,typeUsers)
+                        for (i in userList){
+                            if (currentUser==i){
+                                binding.upHelperText.text = "This acc already exists"
+                            }else{
+                                userList.add(currentUser)
+                                if (binding.signUpCheckBox.isChecked){
+                                    editor.putBoolean("REMEMBER",true)
+                                }
+                                strUsers = gson.toJson(userList)
+                                editor.putString("USERS",strUsers)
+                                strUser = gson.toJson(currentUser)
+                                editor.putString("USER", strUser)
+                                editor.apply()
+                                parentFragmentManager.beginTransaction().replace(R.id.main,
+                                    ParentFragment()).commit()
+                            }
                         }
                     }
+                }else{
+
                 }
             }
         }
@@ -105,17 +114,39 @@ class SignUpFragment : Fragment() {
 
         currentUser = User(userName,userPassword)
 
-        if (userName.isEmpty()){
-            binding.bigSignUpName.helperText = "Please fill"
+        if (userName.isEmpty() || userPassword.isEmpty()){
+            binding.upHelperText.text = "Please fill"
         }else{
-            binding.bigSignUpName.helperText = "Your name"
-        }
-        if(userPassword.isEmpty()){
-            binding.bigSignUpPassword.helperText = "Please fill"
-        }else{
-            binding.bigSignUpPassword.helperText = "Password"
+            binding.bigSignUpName.helperText = ""
         }
         return userName.isEmpty() or (userPassword.isEmpty())
+    }
+
+    fun isDataCorrect():Boolean{
+        var name = userName
+        var pass = userPassword
+        var result = true
+
+        for (i in name){
+            if (i==' '){
+                binding.upHelperText.text = "Write name without ' ' "
+                result = false
+            }
+        }
+
+        for (i in pass){
+            if (i==' '){
+                binding.upHelperText.text = "Write password without ' ' "
+                result = false
+            }
+        }
+
+        if (name[0].isDigit()){
+            binding.upHelperText.text = "Don`t start name with number"
+            result = false
+        }
+
+        return result
     }
 
     companion object {

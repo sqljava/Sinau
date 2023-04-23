@@ -60,29 +60,32 @@ class SignInFragment : Fragment() {
 
         var str = file.getString("USERS","")
 
-
-
         binding.btnSignIn.setOnClickListener {
 
-        if (!areFieldsEmpty()){
-            if (str==""){
-                //findNavController().navigate(R.id.action_signInFragment_to_parentFragment)
-            }
-            else{
-                userList = gson.fromJson(str, type)
-                var user = User(userName, userPassword)
-                for (i in userList){
-                    if (user.name==i.name && user.password==i.password){
-                        currentUser = user
-                        var u = gson.toJson(currentUser)
-                        editor.putString("USER",u)
-                        editor.apply()
-                        parentFragmentManager.beginTransaction().replace(R.id.main,
-                        ParentFragment()).commit()
+            if (!areFieldsEmpty()){
+                if (isDataCorrect()){
+                    if (str==""){
+
+                    }
+                    else{
+                        userList = gson.fromJson(str, type)
+                        var user = User(userName, userPassword)
+                        for (i in userList){
+                            if (user.name==i.name && user.password==i.password){
+                                currentUser = i
+                                var u = gson.toJson(currentUser)
+                                if (binding.signInCheckBox.isChecked){
+                                    editor.putBoolean("REMEMBER",true)
+                                }
+                                editor.putString("USER",u)
+                                editor.apply()
+                                parentFragmentManager.beginTransaction().replace(R.id.main,
+                                    ParentFragment()).commit()
+                            }
+                        }
                     }
                 }
             }
-        }
         }
 
         binding.signUpText.setOnClickListener {
@@ -109,6 +112,33 @@ class SignInFragment : Fragment() {
             binding.bigSignInPassword.helperText = "Password"
         }
         return userName.isEmpty() or (userPassword.isEmpty())
+    }
+
+    fun isDataCorrect():Boolean{
+        var name = userName
+        var pass = userPassword
+        var result = true
+
+        for (i in name){
+            if (i==' '){
+                binding.inHelperText.text = "Write name without ' ' "
+                result = false
+            }
+        }
+
+        for (i in pass){
+            if (i==' '){
+                binding.inHelperText.text = "Write password without ' ' "
+                result = false
+            }
+        }
+
+        if (name[0].isDigit()){
+            binding.inHelperText.text = "Don`t start name with number"
+            result = false
+        }
+
+        return result
     }
 
 

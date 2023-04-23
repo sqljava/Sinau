@@ -9,14 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sinau.R
 import com.example.sinau.databinding.CourseItemBinding
 import com.example.sinau.model.Course
+import com.example.sinau.model.User
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class CourseAdapter(var list: List<Course>, var activity:Activity) :
+class CourseAdapter(var list: MutableList<Course>, var activity:Activity) :
     RecyclerView.Adapter<CourseAdapter.CourseHolder>() {
 
     lateinit var file: SharedPreferences
-    var courseListType = object : TypeToken<List<Course>>(){}.type
+    lateinit var currentUser: User
+    var userType = object : TypeToken<User>(){}.type
     class CourseHolder(var binding: CourseItemBinding) : RecyclerView.ViewHolder(binding.root){
         var name = binding.courseName
         var price = binding.coursePrice
@@ -54,13 +56,19 @@ class CourseAdapter(var list: List<Course>, var activity:Activity) :
                 list[position].liked = true
                 holder.like.setImageResource(R.drawable.favorite)
             }
+
             file = activity.getSharedPreferences("FILE", Context.MODE_PRIVATE)
             var gson = Gson()
             val editor = file.edit()
+            var strUser = file.getString("USER","")
 
-            var strCourses = gson.toJson(list)
-            editor.putString("COURSES", strCourses)
-            editor.commit()
+            currentUser = gson.fromJson(strUser, userType)
+            currentUser.courses = list
+
+            strUser = gson.toJson(currentUser)
+            editor.putString("USER", strUser)
+            editor.apply()
+
         }
 
     }
