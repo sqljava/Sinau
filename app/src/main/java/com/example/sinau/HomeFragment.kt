@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sinau.adapter.CourseAdapter
+import com.example.sinau.databinding.FragmentCourseItemBinding
 import com.example.sinau.databinding.FragmentHomeBinding
 import com.example.sinau.model.Course
 import com.example.sinau.model.User
@@ -79,7 +80,14 @@ class HomeFragment : Fragment() {
 
 
 
-        var adapter = CourseAdapter(courseList,requireActivity())
+        var adapter = CourseAdapter(courseList,requireActivity(),
+            object:CourseAdapter.CourseInterface{
+                override fun onClick(course: Course) {
+                    parentFragmentManager.beginTransaction().
+                    replace(R.id.main, CourseItemFragment.newInstance(course)).commit()
+                }
+
+            })
         binding.recyclerHome.adapter = adapter
 
         var manager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false)

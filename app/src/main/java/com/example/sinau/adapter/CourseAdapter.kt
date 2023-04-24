@@ -13,7 +13,7 @@ import com.example.sinau.model.User
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class CourseAdapter(var list: MutableList<Course>, var activity:Activity) :
+class CourseAdapter(var list: MutableList<Course>, var activity:Activity,var courseInterface: CourseInterface) :
     RecyclerView.Adapter<CourseAdapter.CourseHolder>() {
 
     lateinit var file: SharedPreferences
@@ -25,6 +25,7 @@ class CourseAdapter(var list: MutableList<Course>, var activity:Activity) :
         var img = binding.courseImg
         var rate = binding.courseRate
         var like = binding.courseLiked
+        var main = binding.itemMain
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseHolder {
@@ -57,6 +58,10 @@ class CourseAdapter(var list: MutableList<Course>, var activity:Activity) :
                 holder.like.setImageResource(R.drawable.favorite)
             }
 
+            holder.main.setOnClickListener {
+                courseInterface.onClick(list[position])
+            }
+
             file = activity.getSharedPreferences("FILE", Context.MODE_PRIVATE)
             var gson = Gson()
             val editor = file.edit()
@@ -70,6 +75,8 @@ class CourseAdapter(var list: MutableList<Course>, var activity:Activity) :
             editor.apply()
 
         }
-
+    }
+    interface CourseInterface{
+        fun onClick(course: Course)
     }
 }

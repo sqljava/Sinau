@@ -56,7 +56,14 @@ class SearchFragment : Fragment() {
         var strCourses = file.getString("COURSES", "")
         courseList = gson.fromJson(strCourses, courseListType)
 
-        var adapter = CourseAdapter(courseList,requireActivity())
+        var adapter = CourseAdapter(courseList,requireActivity(),
+            object:CourseAdapter.CourseInterface{
+                override fun onClick(course: Course) {
+                    parentFragmentManager.beginTransaction().
+                    replace(R.id.main, CourseItemFragment()).commit()
+                }
+
+            })
         binding.searchRecycler.adapter = adapter
 
 //        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener{

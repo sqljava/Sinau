@@ -61,7 +61,13 @@ class SeeAllFragment : Fragment() {
         var title = arguments?.getString(ARG_PARAM1)
         binding.moreText.text = title
 
-        var adapter = CourseAdapter(list, requireActivity())
+        var adapter = CourseAdapter(list, requireActivity(),
+            object:CourseAdapter.CourseInterface{
+                override fun onClick(course: Course) {
+                    parentFragmentManager.beginTransaction().
+                    replace(R.id.main, CourseItemFragment.newInstance(course)).commit()
+                }
+            })
 
         if (title=="Wishlist"){
             var wlist = mutableListOf<Course>()
@@ -70,7 +76,14 @@ class SeeAllFragment : Fragment() {
                     wlist.add(i)
                 }
             }
-            adapter = CourseAdapter(wlist,requireActivity())
+            adapter = CourseAdapter(wlist,requireActivity(),
+                object:CourseAdapter.CourseInterface{
+                    override fun onClick(course: Course) {
+                        parentFragmentManager.beginTransaction().
+                        replace(R.id.main, CourseItemFragment.newInstance(course)).commit()
+                    }
+                })
+
         }
 
         var manager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
@@ -82,7 +95,6 @@ class SeeAllFragment : Fragment() {
             parentFragmentManager.beginTransaction().
             replace(R.id.parent_container, HomeFragment()).commit()
         }
-
 
         return binding.root
     }
