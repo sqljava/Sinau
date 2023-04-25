@@ -1,11 +1,20 @@
 package com.example.sinau
 
+import android.app.Dialog
+import android.content.Context
+import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import com.example.sinau.databinding.FragmentProfileBinding
+import com.example.sinau.model.User
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,6 +32,10 @@ class ProfileFragment : Fragment() {
     private var param2: String? = null
 
     lateinit var binding : FragmentProfileBinding
+    lateinit var file: SharedPreferences
+    var userType = object : TypeToken<User>(){}.type
+    lateinit var user : User
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,11 +51,45 @@ class ProfileFragment : Fragment() {
     ): View? {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
-        binding.logout.setOnClickListener {
-            parentFragmentManager.beginTransaction().replace(R.id.main,
-                SignInFragment()).commit()
-        }
+        file = requireActivity().getSharedPreferences("FILE", Context.MODE_PRIVATE)
+        var gson = Gson()
+        val editor = file.edit()
+        var struser = file.getString("USER", "")
 
+        user = gson.fromJson(struser, userType)
+
+
+        binding.profileName.text = user.name
+
+
+
+
+
+        var dialog = Dialog(requireContext())
+        var dialodView = layoutInflater.inflate(R.layout.dialog, null)
+        var btnYes = dialodView.findViewById<Button>(R.id.btn_yes)
+        var btnNo = dialodView.findViewById<Button>(R.id.btn_no)
+
+        binding.logout.setOnClickListener {
+
+            dialog.setContentView(dialodView)
+
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+            dialog.show()
+
+            btnYes.setOnClickListener {
+                editor.putBoolean("REMEMBER", false)
+                editor.apply()
+                parentFragmentManager.beginTransaction().replace(R.id.main,
+                SignInFragment()).commit()
+                dialog.hide()
+            }
+
+            btnNo.setOnClickListener {
+                dialog.hide()
+            }
+        }
 
         return binding.root
     }

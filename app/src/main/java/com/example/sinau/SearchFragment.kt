@@ -84,7 +84,7 @@ class SearchFragment : Fragment() {
 
             if (binding.search.text!=null){
                 for (course in courseList){
-                    if (course.name.lowercase().contains(it.toString().lowercase())){
+                    if (course.name.lowercase().trim().contains(it.toString().lowercase())){
                         list.add(course)
                     }
                 }

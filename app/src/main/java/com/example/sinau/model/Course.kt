@@ -4,5 +4,5 @@ class Course(var name : String, var price : Double,var img:Int):java.io.Serializ
     var lessons = mutableListOf<Lesson>()
     var duration = lessons.size
     var liked = false
-    var rate = 0
+    var rate = 4
 }

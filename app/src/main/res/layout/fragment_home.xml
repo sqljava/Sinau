@@ -193,43 +193,7 @@
         </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:paddingTop="10dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="All courses"
-            android:textSize="20dp"
-            android:textColor="@color/purple_700"
-            android:layout_marginEnd="20dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Popular"
-            android:textSize="20dp"
-            android:textColor="@color/purple_700"
-            android:layout_marginEnd="20dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Newest"
-            android:textSize="20dp"
-            android:textColor="@color/purple_700"
-            android:layout_marginEnd="20dp"/>
-
-
-
-
-
-
-    </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_home"
