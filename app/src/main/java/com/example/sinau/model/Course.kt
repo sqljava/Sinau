@@ -5,4 +5,5 @@ class Course(var name : String, var price : Double,var img:Int):java.io.Serializ
     var duration = lessons.size
     var liked = false
     var rate = 4
+    var isEnrolled = false
 }

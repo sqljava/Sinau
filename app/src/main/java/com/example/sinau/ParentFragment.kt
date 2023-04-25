@@ -12,8 +12,6 @@ import com.example.sinau.databinding.FragmentParentBinding
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 
 
 /**
@@ -23,16 +21,15 @@ private const val ARG_PARAM2 = "param2"
  */
 class ParentFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var param1: Int? = null
+
 
     lateinit var binding: FragmentParentBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            param1 = it.getInt(ARG_PARAM1)
         }
     }
 
@@ -41,12 +38,24 @@ class ParentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentParentBinding.inflate(inflater, container, false)
-
-        //binding.navBar.setupWithNavController(findNavController())
-        //findNavController().navigate(R.id.action_parentFragment_to_nav_menu)
-        //binding.navBar.setupWithNavController(findNavController())
-
         replaceFragment(HomeFragment())
+
+        var a = param1
+
+        when(a){
+            1->{
+                replaceFragment(HomeFragment())
+            }
+            2->{
+                replaceFragment(CourseFragment())
+            }
+            3->{
+                replaceFragment(ChatFragment())
+            }
+            4->{
+                replaceFragment(ProfileFragment())
+            }
+        }
 
         binding.navBar.setOnItemSelectedListener {
 
@@ -92,11 +101,10 @@ class ParentFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(param1: Int) =
             ParentFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putInt(ARG_PARAM1, param1)
                 }
             }
     }

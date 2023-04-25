@@ -63,8 +63,6 @@ class ProfileFragment : Fragment() {
 
 
 
-
-
         var dialog = Dialog(requireContext())
         var dialodView = layoutInflater.inflate(R.layout.dialog, null)
         var btnYes = dialodView.findViewById<Button>(R.id.btn_yes)

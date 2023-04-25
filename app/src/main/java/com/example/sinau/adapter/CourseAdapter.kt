@@ -27,6 +27,7 @@ class CourseAdapter(var list: MutableList<Course>, var activity:Activity,var cou
         var rate = binding.courseRate
         var like = binding.courseLiked
         var main = binding.itemMain
+        var duration = binding.courseDuration
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseHolder {
@@ -43,6 +44,7 @@ class CourseAdapter(var list: MutableList<Course>, var activity:Activity,var cou
         holder.price.text = "$"+list[position].price.toString()
         holder.img.setImageResource(list[position].img)
         holder.rate.text = list[position].rate.toString()
+        holder.duration.text = list[position].duration.toString()+" lessons"
 
         if (list[position].liked){
             holder.like.setImageResource(R.drawable.favorite)

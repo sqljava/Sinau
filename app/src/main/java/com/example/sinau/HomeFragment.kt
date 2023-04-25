@@ -38,11 +38,11 @@ class HomeFragment : Fragment() {
     var courseList = mutableListOf<Course>()
 
     lateinit var file: SharedPreferences
-    var courseListType = object : TypeToken<List<Course>>(){}.type
     var userType = object : TypeToken<User>(){}.type
     var typeUsers = object : TypeToken<List<User>>(){}.type
     lateinit var currentUser : User
     var users = mutableListOf<User>()
+    var myCourses = currentUser.myCourses
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +68,8 @@ class HomeFragment : Fragment() {
         var strUser = file.getString("USER", "")
         currentUser  = gson.fromJson(strUser,userType)
 
+
+
         binding.hello.text = "Hello "+currentUser.name+"!"
 
         if (currentUser.courses.isEmpty()){
@@ -83,6 +85,7 @@ class HomeFragment : Fragment() {
         var adapter = CourseAdapter(courseList,requireActivity(),
             object:CourseAdapter.CourseInterface{
                 override fun onClick(course: Course) {
+
                     parentFragmentManager.beginTransaction().
                     replace(R.id.main, CourseItemFragment.newInstance(course)).commit()
                 }
@@ -128,6 +131,10 @@ class HomeFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    fun isEnrolledCourse(){
+
     }
 
     fun addCourse(){

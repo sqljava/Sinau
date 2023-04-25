@@ -1,10 +1,20 @@
 package com.example.sinau
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.sinau.adapter.MyCourseAdapter
+import com.example.sinau.databinding.FragmentCourseBinding
+import com.example.sinau.model.Course
+import com.example.sinau.model.User
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +31,12 @@ class CourseFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    lateinit var binding: FragmentCourseBinding
+    lateinit var file: SharedPreferences
+    var userType = object : TypeToken<User>(){}.type
+    lateinit var currentUser : User
+    var mycourses = mutableListOf<Course>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -33,8 +49,33 @@ class CourseFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_course, container, false)
+        binding = FragmentCourseBinding.inflate(inflater, container, false)
+
+        file = requireActivity().getSharedPreferences("FILE", Context.MODE_PRIVATE)
+        var gson = Gson()
+        val editor = file.edit()
+
+        var strUser = file.getString("USER", "")
+        currentUser  = gson.fromJson(strUser,userType)
+
+        mycourses = currentUser.myCourses
+
+        var manager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+
+        binding.myCourseRv.layoutManager = manager
+
+        var adapter = MyCourseAdapter(mycourses)
+
+        binding.myCourseRv.adapter = adapter
+
+
+
+
+
+
+
+
+        return binding.root
     }
 
     companion object {
