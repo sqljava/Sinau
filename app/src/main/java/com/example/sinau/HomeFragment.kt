@@ -96,7 +96,8 @@ class HomeFragment : Fragment() {
 
 
         binding.search.setOnClickListener{
-            //findNavController().navigate(R.id.action_homeFragment2_to_searchFragment)
+            parentFragmentManager.beginTransaction().replace(R.id.parent_container,
+                SearchFragment()).commit()
         }
 
         binding.seeAllCourses.setOnClickListener {

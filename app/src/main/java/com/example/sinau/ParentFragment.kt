@@ -48,7 +48,7 @@ class ParentFragment : Fragment() {
 
         replaceFragment(HomeFragment())
 
-        binding.navBar.setOnItemReselectedListener {
+        binding.navBar.setOnItemSelectedListener {
 
             when(it.itemId){
                 R.id.homeFragment->{

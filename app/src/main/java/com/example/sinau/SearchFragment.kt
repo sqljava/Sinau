@@ -8,9 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.core.widget.addTextChangedListener
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.sinau.adapter.CourseAdapter
 import com.example.sinau.databinding.FragmentSearchBinding
 import com.example.sinau.model.Course
+import com.example.sinau.model.User
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -33,7 +37,8 @@ class SearchFragment : Fragment() {
 
     var courseList = mutableListOf<Course>()
     lateinit var file: SharedPreferences
-    var courseListType = object : TypeToken<List<Course>>(){}.type
+    var userType = object : TypeToken<User>(){}.type
+    lateinit var user : User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,9 +57,15 @@ class SearchFragment : Fragment() {
         file = requireActivity().getSharedPreferences("FILE", Context.MODE_PRIVATE)
         var gson = Gson()
         //val editor = file.edit()
+        var struser = file.getString("USER", "")
 
-        var strCourses = file.getString("COURSES", "")
-        courseList = gson.fromJson(strCourses, courseListType)
+        user = gson.fromJson(struser, userType)
+
+        courseList = user.courses
+
+
+        var manager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+        binding.searchRecycler.layoutManager = manager
 
         var adapter = CourseAdapter(courseList,requireActivity(),
             object:CourseAdapter.CourseInterface{
@@ -62,40 +73,29 @@ class SearchFragment : Fragment() {
                     parentFragmentManager.beginTransaction().
                     replace(R.id.main, CourseItemFragment()).commit()
                 }
-
             })
         binding.searchRecycler.adapter = adapter
 
-//        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-//            override fun onQueryTextSubmit(p0: String?): Boolean {
-//                binding.search.clearFocus()
-//                var list = mutableListOf<Course>()
-//
-//                for (i in courseList){
-//                    if (i.name.contains(p0.toString())){
-//                        list.add(i)
-//                    }
-//                }
-//                binding.searchRecycler.adapter = CourseAdapter(list,requireActivity())
-//
-//                return false
-//            }
-//
-//            override fun onQueryTextChange(p0: String?): Boolean {
-//                binding.search.clearFocus()
-//                var list = mutableListOf<Course>()
-//
-//                for (i in courseList){
-//                    if (i.name.contains(p0.toString())){
-//                        list.add(i)
-//                    }
-//                }
-//                binding.searchRecycler.adapter = CourseAdapter(list,requireActivity())
-//
-//                return false
-//            }
-//        })
 
+
+
+        binding.search.addTextChangedListener {
+            var list = mutableListOf<Course>()
+
+            if (binding.search.text!=null){
+                for (course in courseList){
+                    if (course.name.lowercase().contains(it.toString().lowercase())){
+                        list.add(course)
+                    }
+                }
+                adapter.setList(list)
+            }
+        }
+
+        binding.back.setOnClickListener {
+            parentFragmentManager.beginTransaction().replace(R.id.parent_container,
+            HomeFragment()).commit()
+        }
 
         return binding.root
     }

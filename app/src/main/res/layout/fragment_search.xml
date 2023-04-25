@@ -16,6 +16,7 @@
         android:gravity="center_vertical">
 
         <RelativeLayout
+            android:id="@+id/back"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/search_bg">
@@ -28,14 +29,36 @@
 
         </RelativeLayout>
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/search"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        app:queryHint="Search"
-        android:background="@drawable/search_bg"
-        android:layout_marginStart="50dp"
-        />
+        <FrameLayout
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/search_bg"
+            android:queryBackground="@android:color/transparent"
+            >
+
+            <EditText
+                android:id="@+id/search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Search"
+                android:textSize="20dp"
+                android:background="@drawable/search_bg"
+                android:textColor="@color/black"
+                android:layout_marginStart="20dp"
+                android:layout_gravity="center_vertical"/>
+
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/search"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="20dp"
+                />
+
+
+        </FrameLayout>
 
         <RelativeLayout
             android:layout_width="40dp"

@@ -1,5 +1,6 @@
 package com.example.sinau.adapter
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
@@ -76,6 +77,15 @@ class CourseAdapter(var list: MutableList<Course>, var activity:Activity,var cou
 
         }
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    @JvmName("setList1")
+    fun setList(flist: MutableList<Course>){
+        list = flist
+        notifyDataSetChanged()
+    }
+
+
     interface CourseInterface{
         fun onClick(course: Course)
     }
